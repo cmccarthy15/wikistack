@@ -18,5 +18,13 @@ app.engine('html', nunjucks.render);
 app.set('view engine', 'html');
 nunjucks.configure('views', { noCache: true });
 
-var server = app.listen(1337);
-var io = socketio.listen(server);
+var io;
+var models = require('./models');
+
+models.db.sync({})
+.then(function () {
+    // make sure to replace the name below with your express app
+    var server = app.listen(1337);
+    io = socketio.listen(server);
+})
+.catch(console.error);
