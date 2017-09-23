@@ -1,10 +1,10 @@
 var express = require('express');
 var router = require('./routes');
 var morgan = require('morgan');
-var path = require('path')
+var path = require('path');
 var nunjucks = require('nunjucks');
 var bodyParser = require('body-parser');
-var socketio = require('socket.io');
+//var socketio = require('socket.io');
 
 
 var app = express();
@@ -18,13 +18,13 @@ app.engine('html', nunjucks.render);
 app.set('view engine', 'html');
 nunjucks.configure('views', { noCache: true });
 
-var io;
+//var io;
 var models = require('./models');
 
 models.db.sync({})
 .then(function () {
     // make sure to replace the name below with your express app
-    var server = app.listen(1337);
-    io = socketio.listen(server);
+    app.listen(1337);
+    //io = socketio.listen(server);
 })
 .catch(console.error);
