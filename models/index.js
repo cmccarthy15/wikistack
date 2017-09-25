@@ -10,10 +10,7 @@ const Page = db.define('page', {
   },
   urlTitle: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      isUrl: true
-    }
+    allowNull: false
   },
   content: {
     type: Sequelize.TEXT,
@@ -28,6 +25,21 @@ const Page = db.define('page', {
     defaultValue: Sequelize.NOW
   }
 }, {
+  hooks: {
+    beforeValidate: (user, options) => {
+      user.urlTitle = user.title ? user.title.replace(/\s/g, '_').replace(/\W/g, '') : Math.random().toString(36).substring(2, 7);
+
+      // OPTION 2
+      // if (user.title){
+      //   user.urlTitle = user.title.replace(/\s/g, '_').replace(/\W/g, '');
+      // } else {
+      //   user.urlTitle = Math.random().toString(36).substring(2, 7);
+      // }
+
+      // OPTION 3 - see function below
+      //user.urlTitle =  getUrl(user.title);
+    }
+  },
   getterMethods: {
     route() {
       return '/wiki/' + this.urlTitle;
@@ -54,3 +66,15 @@ module.exports = {
   User: User,
   db: db
 };
+
+
+
+
+
+// function getUrl(title){
+//   if (title){
+//     return title.replace(/\s/g, '_').replace(/\W/g, '');
+//   } else {
+//     return Math.random().toString(36).substring(2, 7);
+//   }
+// }

@@ -1,6 +1,11 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const wikiRouter = require('./wiki.js');
+const userRouter = require('./user.js');
 
+
+router.use('/wiki', wikiRouter);
+//router.use('/wiki', userRouter); // or will this be a different link?
 
 router.get('/', function(req, res, next){
   res.render('index');
