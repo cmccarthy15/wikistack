@@ -6,7 +6,7 @@ var User = models.User;
 
 
 router.get('/', function(req, res, next){
-  if(req.query.tags) {
+  if (req.query.tags) {
     next();
   } else {
   Page.findAll()
@@ -19,7 +19,7 @@ router.get('/', function(req, res, next){
 });
 
 router.get('/', function(req, res, next) {
-  var search = req.query.tags.split(" ");
+  var search = req.query.tags.split(' ');
   Page.findAll({
     where: {
       tags: {

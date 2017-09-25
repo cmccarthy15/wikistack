@@ -30,17 +30,7 @@ const Page = db.define('page', {
 }, {
   hooks: {
     beforeValidate: (user, options) => {
-      user.urlTitle = user.title ? user.title.replace(/\s/g, '_').replace(/\W/g, '') : Math.random().toString(36).substring(2, 7);
-
-      // OPTION 2
-      // if (user.title){
-      //   user.urlTitle = user.title.replace(/\s/g, '_').replace(/\W/g, '');
-      // } else {
-      //   user.urlTitle = Math.random().toString(36).substring(2, 7);
-      // }
-
-      // OPTION 3 - see function below
-      //user.urlTitle =  getUrl(user.title);
+      user.urlTitle = user.title ? user.title.trim().replace(/\s/g, '_').replace(/\W/g, '') : Math.random().toString(36).substring(2, 7);
     }
   },
   getterMethods: {
