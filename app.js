@@ -21,7 +21,7 @@ nunjucks.configure('views', { noCache: true });
 //var io;
 var models = require('./models');
 
-models.db.sync({})
+models.db.sync({force: true})
 .then(function () {
     // make sure to replace the name below with your express app
     app.listen(1337);
