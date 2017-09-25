@@ -11,6 +11,11 @@ router.get('/', function(req, res, next){
   res.render('index');
 });
 
+router.get('/search', function(req, res, next){
+  res.render('searchtags');
+  //res.send('retrieve the "add a page" form');
+});
+
 module.exports = router;
 
 

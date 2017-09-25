@@ -6,12 +6,31 @@ var User = models.User;
 
 
 router.get('/', function(req, res, next){
+  if(req.query.tags) {
+    next();
+  } else {
   Page.findAll()
   .then(function(pages) {
     res.render('index', { pages: pages});
   });
   // res.redirect('/');
   //res.send('retrieve all wiki pages');
+  }
+});
+
+router.get('/', function(req, res, next) {
+  var search = req.query.tags.split(" ");
+  Page.findAll({
+    where: {
+      tags: {
+        $overlap: search
+      }
+    }
+  }).then(function (pages) {
+    res.render('index', { pages: pages });
+  });
+
+
 });
 
 router.get('/add', function(req, res, next){
@@ -32,7 +51,7 @@ router.get('/:pagetitle', function(req, res, next) {
     if (page === null) {
       res.status(404).send();
     } else {
-      console.log();
+
       res.render('wikipage', { foundPage: page});
     }
   })
@@ -67,8 +86,8 @@ router.post('/', function(req, res, next){
 
     var page = Page.build({
       title: req.body.title,
-      content: req.body.content
-      //authorId: userInfo[0].id
+      content: req.body.content,
+      tags: req.body.tags.split(" ")
     });
     return page.save().then(function (page) {
       return page.setAuthor(user);
