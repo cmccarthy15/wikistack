@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 
 
 var app = express();
+app.use(express.static('public'));
+// what you call this on will depend on how much of your code you want to be public
 app.use(morgan('tiny'));
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.urlencoded({ extended: true}));
